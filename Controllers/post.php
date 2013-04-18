@@ -21,17 +21,22 @@
                     $resultaat = $peter->add($user->id,$_POST['event_id']);
                     if($resultaat == true)
                     {
-                        $data["attendee"] = $peter->get($user->id);
+                        $peter->get($user->id);
+                        $data["attendee_name"] = $peter->naam;
+                        $data["attendee_id"] = $peter->user_id;
                         $data["success"] = true;
+
                     }
                     else
                     {
                         $data["success"] = false;
+                        $data["error"] = mysql_error();
                     }
                 }
                 else
                 {
                     $data["success"] = false;
+                    $data["error"] = mysql_error();
                 }
 
                 echo json_encode($data);
@@ -48,6 +53,7 @@
                     if($resultaat == true)
                     {
                         $data["success"] = true;
+                        $data["attendee_id"] = $user->id;
                     }
                     else
                     {

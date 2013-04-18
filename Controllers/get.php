@@ -16,7 +16,8 @@
                 ?>
 
                 <div id='<?php echo $event->event_id ?>'>
-                    <p>Datum: <?php echo $event->event_datum ?></p>
+                    <p>Datum: <?php echo $event->event_datum ?>
+                    </p>
 
                     <p>Commentaar:  <?php echo $event->commentaar ?> </p>
 
@@ -29,17 +30,19 @@
                                 if($peter->user_id == $user->id) $aanwezig = true;
                                 ?>
 
-                            <li><?php echo $peter->naam ?></li>
+                            <li id='<?php echo $peter->user_id ?>'><?php echo $peter->naam ?></li>
                         <?php } ?>
                     </ul>
                     </p>
                     <?php if($user->id != null){ ?>
-                    <p id="btnAttendee">
+                    <p id="btnsAttendee">
                         <?php if(!$aanwezig){
                                 ?>
-                            <button class="btn btn-large btn-primary" onclick="addAttendee(<?php echo $event->event_id ?>)">Aanwezig!</button>
+                            <button id='btnAanwezig' class="btn btn-large btn btn-success" onclick="addAttendee(<?php echo $event->event_id ?>)" >Aanwezig!</button>
+                            <button id='btnAfwezig' class="btn btn-large btn-danger" onclick="deleteAttendee(<?php echo $event->event_id ?>)" disabled>Afwezig</button>
                         <?php } else { ?>
-                            <button class="btn btn-large btn-primary" onclick="deleteAttendee(<?php echo $event->event_id ?>)">Afwezig</button>
+                            <button id='btnAanwezig' class="btn btn-large btn btn-success" onclick="addAttendee(<?php echo $event->event_id ?>)"disabled >Aanwezig!</button>
+                            <button id='btnAfwezig' class="btn btn-large btn-danger" onclick="deleteAttendee(<?php echo $event->event_id ?>)" >Afwezig</button>
                         <?php } ?>
                     </p>
                     <?php } ?>

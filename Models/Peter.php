@@ -21,6 +21,7 @@
             $user =& JFactory::getUser($user_id);
             $this->naam = $user->name;
             $this->user_id = $user->id;
+            $this->user_id = $user->id;
         }
 
         public function get_aanwezigen($event_id)
@@ -44,7 +45,7 @@
         {
             $user =& JFactory::getUser($resultaat->user_id);
 
-            $this->user_id = $resultaat->user_id;
+            $this->user_id = $resultaat["user_id"];
             /* @var $user JUser */
             $this->naam = $user->name;
 
@@ -57,7 +58,7 @@
                 petermeter_attendees
             SET
               user_id = '%s',
-              event_id = '%s',
+              event_id = '%s'
               ",
                 mysql_real_escape_string($user_id),
                 mysql_real_escape_string($event_id)

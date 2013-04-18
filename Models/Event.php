@@ -6,6 +6,7 @@
  */
 
     require_once(__DIR__ . '/../connect.php');
+    require_once(__DIR__ . '/Peter.php');
 class Event{
     public $event_id;
     public $event_datum;
@@ -34,7 +35,9 @@ class Event{
         $this->commentaar = $resultaat["commentaar"];
         $this->event_datum = $resultaat["event_datum"];
         $this->event_id = $resultaat["id"];
-        $this->lijst_peters = Peter::get_aanwezigen($this->event_id);
+
+        $peter = new Peter();
+        $this->lijst_peters = $peter->get_aanwezigen($this->event_id);
     }
 
     public function add($event_datum, $commentaar)

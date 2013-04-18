@@ -65,24 +65,53 @@ function loadEvents()
 
 function addAttendee(event_id)
 {
-    $.ajax({
+    jQuery.ajax({
         type: "POST",
         url: "index.php?option=com_jumi&fileid=3&format=raw",
         data: {'action': 'addAttendee','event_id': event_id},
         success: function(data){
-            var parsed = $.parseJSON(data);
+            var parsed = jQuery.parseJSON(data);
             if(parsed['success'])
             {
-                $('#mydiv .myclass')
-                loadEvents();
+                newItem = jQuery("<li id='"+parsed["attendee_id"]+"'>" + parsed["attendee_name"]+"</li>").hide();
+                jQuery('#' + event_id + ' #attendeeList').prepend(newItem);
+                newItem.fadeIn();
+                jQuery('#' + event_id + ' #btnsAttendee #btnAanwezig').attr("disabled", "disabled");
+                jQuery('#' + event_id + ' #btnsAttendee #btnAfwezig').removeAttr("disabled");
             }
             else
             {
-                $("#warningAddEvent").show();
+               alert("Sorry, je kon niet toegevoegd worden. Ben je al niet aanwezig? Zoniet, contacteer Lennart!");
             }
         },
         error: function (jqXHR, exception) {
-            $("#warningAddEvent").show();
+            alert("Sorry, je kon niet toegevoegd worden. Contacteer Lennart!");
+
+        }
+    });
+
+}
+function deleteAttendee(event_id)
+{
+    jQuery.ajax({
+        type: "POST",
+        url: "index.php?option=com_jumi&fileid=3&format=raw",
+        data: {'action': 'deleteAttendee','event_id': event_id},
+        success: function(data){
+            var parsed = jQuery.parseJSON(data);
+            if(parsed['success'])
+            {
+                jQuery('#' + event_id + ' #attendeeList #'+ parsed["attendee_id"]).fadeOut( function() { jQuery(this).remove(); });
+                jQuery('#' + event_id + ' #btnsAttendee #btnAfwezig').attr("disabled", "disabled");
+                jQuery('#' + event_id + ' #btnsAttendee #btnAanwezig').removeAttr("disabled");
+            }
+            else
+            {
+                alert("Sorry, verwijderen mislukt. Al verwijderd? Zoniet, contacteer Lennart!");
+            }
+        },
+        error: function (jqXHR, exception) {
+            alert("Sorry, je kon niet verwijderd worden. Contacteer Lennart!");
 
         }
     });
