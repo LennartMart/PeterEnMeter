@@ -1,3 +1,4 @@
+<link rel="stylesheet" type="text/css" href="components/com_jumi/files/PeterEnMeter/assets/css/petermeter.css">
 <script src="components/com_jumi/files/PeterEnMeter/assets/js/petermeter.js">
 </script>
 <h2>Overzicht Peter en Meter</h2>
@@ -9,7 +10,9 @@
         <div class="control-group">
             <label class="control-label" for="eventDate">Datum</label>
             <div class="controls">
-                <input type="date" id="eventDate" name="bday">
+                <input type="text" style="width: 22px" maxlength="2" placeholder="dd" id="eventDay">/
+                <input type="text" style="width: 22px"  maxlength="2" placeholder="mm" id="eventMonth">/
+                <input type="text" style="width: 44px"  maxlength="4" placeholder="yyyy" id="eventYear" >
         </div>
             </div>
             <div class="control-group">
@@ -33,4 +36,4 @@
     <div class="alert alert-warning" id="warningAddEvent" style="display: none;">Helaas, toevoegen mislukt!. Contacteer Lennart voor meer info.</div>
     <div class="alert alert-success" id="successAddEvent" style="display: none;">Event succesvol toegevoegd!</div>
 </div>
-<div id="ViewEvents"></div>
+<div id="ViewEvents" style="overflow: hidden;"></div>

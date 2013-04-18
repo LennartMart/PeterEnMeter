@@ -18,7 +18,7 @@
                 {
                     $user = JFactory::getUser();
                     $peter = new Peter();
-                    $resultaat = $peter->add($user->id,$_POST['event_id']);
+                    $resultaat = $peter->add($user->id,$user->name, $_POST['event_id']);
                     if($resultaat == true)
                     {
                         $peter->get($user->id);

@@ -6,12 +6,21 @@ jQuery(document).ready(function($){
     });
 
     $('#submitAddEvent').click(function () {
+
+        var eventDay = $('#eventDay').val();
+        var eventMonth = $('#eventMonth').val();
+        var eventYear = $('#eventYear').val();
+        if(!validateInput(eventDay, eventMonth, eventYear))
+        {
+            return false;
+        }
+        var eventDate = eventYear + "-" + eventMonth + "-" + eventDay;
         //Hide the elements
         $("#successAddEvent").hide();
         $("#warningAddEvent").hide();
 
         var comment = $('#eventComment').val();
-        var eventDate = $('#eventDate').val();
+
         //ContentHeader = text/html, Jumi override this...
         $.ajax({
             type: "POST",
@@ -44,6 +53,16 @@ jQuery(document).ready(function($){
 
 
 })
+function validateInput(eventDay, eventMonth, eventYear)
+{
+    if (eventDay==null || eventDay=="" || eventMonth==null || eventMonth=="" || eventYear==null || eventYear=="")
+    {
+        alert("Vul datum in");
+        return false;
+    }
+    return true;
+}
+
 function loadEvents()
 {
     jQuery.ajax({
@@ -78,6 +97,7 @@ function addAttendee(event_id)
                 newItem.fadeIn();
                 jQuery('#' + event_id + ' #btnsAttendee #btnAanwezig').attr("disabled", "disabled");
                 jQuery('#' + event_id + ' #btnsAttendee #btnAfwezig').removeAttr("disabled");
+                updateProgressbar(event_id);
             }
             else
             {
@@ -101,9 +121,10 @@ function deleteAttendee(event_id)
             var parsed = jQuery.parseJSON(data);
             if(parsed['success'])
             {
-                jQuery('#' + event_id + ' #attendeeList #'+ parsed["attendee_id"]).fadeOut( function() { jQuery(this).remove(); });
+                jQuery('#' + event_id + ' #attendeeList #'+ parsed["attendee_id"]).fadeOut( function() { jQuery(this).remove(); updateProgressbar(event_id); });
                 jQuery('#' + event_id + ' #btnsAttendee #btnAfwezig').attr("disabled", "disabled");
                 jQuery('#' + event_id + ' #btnsAttendee #btnAanwezig').removeAttr("disabled");
+
             }
             else
             {
@@ -115,5 +136,14 @@ function deleteAttendee(event_id)
 
         }
     });
+
+}
+
+function updateProgressbar(event_id)
+{
+    var amount = jQuery("#"+event_id+" #attendeeList li").size();
+    jQuery("#"+event_id+ " #requiredAttendees").text(amount+ " van de vereiste 8");
+    var percent = (amount / 8) *100;
+    jQuery("#"+event_id+ " .bar").width(percent+'%');
 
 }

@@ -15,15 +15,18 @@
                  $event = $events[$i];
                 ?>
 
-                <div id='<?php echo $event->event_id ?>'>
-                    <p>Datum: <?php echo $event->event_datum ?>
-                    </p>
+                <div class="Event" style="overflow: hidden;" id='<?php echo $event->event_id ?>'>
+                <div style="float: left; width: 50%">
+                    <h3><?php echo $event->event_datum ?>
+                    </h3>
 
-                    <p>Commentaar:  <?php echo $event->commentaar ?> </p>
+                    <p><?php echo $event->commentaar ?> </p>
 
                     <p>Peters / Meters aanwezig:
                     <ul id='attendeeList'>
                         <?php $aanwezig = false;
+                            $aantal = count($event->lijst_peters);
+                            $aantalPercent = ($aantal / 8) *100;
                             for ($j = 0, $o = count($event->lijst_peters); $j < $o; $j++) {
                                 $peters = $event->lijst_peters;
                                 $peter = $peters[$j];
@@ -46,7 +49,15 @@
                         <?php } ?>
                     </p>
                     <?php } ?>
+                    </div>
+                <div style="float: left;">
+                    <h4>Aantal peters en meters:</h4>
+                    <label id="requiredAttendees" ><?php echo $aantal ?> van de vereiste 8</label><div class="progress progress-success">
+                        <div class="bar" style="width: <?php echo $aantalPercent ?>%"></div>
+                    </div>
                 </div>
+                </div>
+
             <?php
             }
                 echo ob_get_clean();

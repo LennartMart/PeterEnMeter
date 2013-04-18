@@ -43,25 +43,25 @@
 
         public function vulop($resultaat)
         {
-            $user =& JFactory::getUser($resultaat->user_id);
-
             $this->user_id = $resultaat["user_id"];
             /* @var $user JUser */
-            $this->naam = $user->name;
+            $this->naam = $resultaat["naam"];
 
         }
 
-        public function add($user_id, $event_id)
+        public function add($user_id, $naam, $event_id)
         {
             $query = sprintf("
             INSERT INTO
                 petermeter_attendees
             SET
               user_id = '%s',
-              event_id = '%s'
+              event_id = '%s',
+              naam = '%s'
               ",
                 mysql_real_escape_string($user_id),
-                mysql_real_escape_string($event_id)
+                mysql_real_escape_string($event_id),
+                mysql_real_escape_string($naam)
             );
             return mysql_query($query);
         }
