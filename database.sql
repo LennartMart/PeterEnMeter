@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS `petermeter_events` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `event_datum` datetime NOT NULL,
+  `event_datum` date NOT NULL,
   `commentaar` VARCHAR(256) default NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -8,6 +8,7 @@
     require_once(__DIR__ . '/../Models/Peter.php');
     if(isset($_POST['action']) && !empty($_POST['action']))
     {
+
         $action = $_POST['action'];
         switch($action) {
             case 'addAttendee' :
@@ -20,7 +21,7 @@
                     $resultaat = $peter->add($user->id,$_POST['event_id']);
                     if($resultaat == true)
                     {
-                        $data["attendee"] = Peter::get($user->id);
+                        $data["attendee"] = $peter->get($user->id);
                         $data["success"] = true;
                     }
                     else
