@@ -95,7 +95,7 @@ class Event{
               SELECT
                 *
               FROM petermeter_events
-              WHERE event_datum >= NOW()
+              WHERE event_datum >= DATE(NOW())
               ORDER BY event_datum;
               ";
         $resultaat = mysql_query($query);
